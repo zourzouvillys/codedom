@@ -1,24 +1,24 @@
-package io.joss.graphql.generator.java;
+package io.netlibs.codedom.java;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import io.joss.graphql.generator.java.codedom.AssignmentExpression;
-import io.joss.graphql.generator.java.codedom.BodyDeclarationVisitor;
-import io.joss.graphql.generator.java.codedom.ExpressionStatement;
-import io.joss.graphql.generator.java.codedom.ExpressionVisitor;
-import io.joss.graphql.generator.java.codedom.FieldDeclaration;
-import io.joss.graphql.generator.java.codedom.FieldExpression;
-import io.joss.graphql.generator.java.codedom.MethodDeclaration;
-import io.joss.graphql.generator.java.codedom.Modifier;
-import io.joss.graphql.generator.java.codedom.ReturnStatement;
-import io.joss.graphql.generator.java.codedom.SimpleNameExpression;
-import io.joss.graphql.generator.java.codedom.SingleVariableDeclaration;
-import io.joss.graphql.generator.java.codedom.StatementVisitor;
-import io.joss.graphql.generator.java.codedom.ThisExpression;
-import io.joss.graphql.generator.java.codedom.TypeDeclaration;
+import io.netlibs.codedom.java.codedom.AssignmentExpression;
+import io.netlibs.codedom.java.codedom.BodyDeclarationVisitor;
+import io.netlibs.codedom.java.codedom.ExpressionStatement;
+import io.netlibs.codedom.java.codedom.ExpressionVisitor;
+import io.netlibs.codedom.java.codedom.FieldDeclaration;
+import io.netlibs.codedom.java.codedom.FieldExpression;
+import io.netlibs.codedom.java.codedom.MethodDeclaration;
+import io.netlibs.codedom.java.codedom.Modifier;
+import io.netlibs.codedom.java.codedom.ReturnStatement;
+import io.netlibs.codedom.java.codedom.SimpleNameExpression;
+import io.netlibs.codedom.java.codedom.SingleVariableDeclaration;
+import io.netlibs.codedom.java.codedom.StatementVisitor;
+import io.netlibs.codedom.java.codedom.ThisExpression;
+import io.netlibs.codedom.java.codedom.TypeDeclaration;
 
 public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisitor<Void>, ExpressionVisitor<Void>
 {
@@ -26,7 +26,7 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
   private PrintStream out;
   private int depth = 0;
 
-  JavaWriter(OutputStream out)
+  public JavaWriter(OutputStream out)
   {
     this.out = new PrintStream(out);
   }

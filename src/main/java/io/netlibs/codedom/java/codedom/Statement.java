@@ -1,4 +1,4 @@
-package io.joss.graphql.generator.java.codedom;
+package io.netlibs.codedom.java.codedom;
 
 public interface Statement
 {

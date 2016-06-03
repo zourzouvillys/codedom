@@ -1,4 +1,4 @@
-package io.joss.graphql.generator.java;
+package io.netlibs.codedom.java;
 
 public interface TypeDeclarationVisitor<R>
 {

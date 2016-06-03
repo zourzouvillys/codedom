@@ -8,5 +8,5 @@ netlibs codedom provides such an implementation.  Currently it's just for Java, 
 
 ## History
 
-This code was initially part of a Java GraphQL implementation, but when the (author)[https://github.com/zourzouvillys] needed similar functionallity for the XANGKit project, it was moved into the netlibs repo.
+This code was initially part of a Java GraphQL implementation, but when the [author](https://github.com/zourzouvillys) needed similar functionallity for the XANGKit project, it was moved into the netlibs repo.
 

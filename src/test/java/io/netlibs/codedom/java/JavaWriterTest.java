@@ -27,11 +27,11 @@ public class JavaWriterTest
         .javadoc("This is some documentation for this class.")
         .bodyDeclaration(
             MethodDeclaration.builder()
-                .type("String")
+                .type(Types.string())
                 .name("getXYZ")
                 .modifier(Modifier.PUBLIC)
                 .body(Block.builder()
-                    .statement(Expressions.$return("hello"))
+                    .statement(Expressions.$return("hello, world"))
                     .build())
                 .build());
 

@@ -11,7 +11,7 @@ import lombok.Value;
 @Builder(builderClassName = "Builder")
 public class MethodDeclaration implements BodyDeclaration
 {
-  
+
   private final boolean constructor;
 
   private final String javadoc;
@@ -19,7 +19,7 @@ public class MethodDeclaration implements BodyDeclaration
   private final Set<String> annotations;
   @Singular
   private final Set<Modifier> modifiers;
-  private String type;
+  private TypeRef type;
   private String name;
 
   @Singular

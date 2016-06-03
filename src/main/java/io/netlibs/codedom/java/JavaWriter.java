@@ -17,15 +17,18 @@ import io.netlibs.codedom.java.codedom.FieldExpression;
 import io.netlibs.codedom.java.codedom.MethodDeclaration;
 import io.netlibs.codedom.java.codedom.Modifier;
 import io.netlibs.codedom.java.codedom.ReturnStatement;
+import io.netlibs.codedom.java.codedom.SimpleClassTypeRef;
 import io.netlibs.codedom.java.codedom.SimpleNameExpression;
 import io.netlibs.codedom.java.codedom.SingleVariableDeclaration;
 import io.netlibs.codedom.java.codedom.StatementVisitor;
 import io.netlibs.codedom.java.codedom.StringValue;
 import io.netlibs.codedom.java.codedom.ThisExpression;
 import io.netlibs.codedom.java.codedom.TypeDeclaration;
+import io.netlibs.codedom.java.codedom.TypeRefVisitor;
 
 public class JavaWriter
-    implements BodyDeclarationVisitor<Void>, StatementVisitor<Void>, ExpressionVisitor<Void>, ConstantValueVisitor<Void>
+    implements BodyDeclarationVisitor<Void>, StatementVisitor<Void>, ExpressionVisitor<Void>,
+    ConstantValueVisitor<Void>, TypeRefVisitor<Void>
 {
 
   private PrintStream out;
@@ -145,7 +148,7 @@ public class JavaWriter
 
     if (!method.isConstructor())
     {
-      out.print(method.getType());
+      method.getType().apply(this);
       out.print(" ");
     }
 
@@ -159,7 +162,7 @@ public class JavaWriter
       {
         out.print(", ");
       }
-      out.print(param.getType());
+      param.getType().apply(this);
       out.print(" ");
       out.print(param.getName());
     }
@@ -221,7 +224,7 @@ public class JavaWriter
     {
       out.print(" ");
     }
-    out.print(field.getType());
+    field.getType().apply(this);
     out.print(" ");
     out.print(field.getName());
     out.println(";");
@@ -328,6 +331,27 @@ public class JavaWriter
     }
 
     out.print('"');
+
+    return null;
+
+  }
+
+  /**
+   * 
+   */
+
+  @Override
+  public Void visitSimpleClassTypeRef(SimpleClassTypeRef ref)
+  {
+
+    if (ref.getScope() != null && !ref.getScope().equals("java.lang"))
+    {
+      // TODO: calculate if we need to provide full scope based on imports etc.
+      out.print(ref.getScope());
+      out.print(".");
+    }
+
+    out.print(ref.getClassName());
 
     return null;
 

@@ -9,8 +9,8 @@ public class SingleVariableDeclaration
 {
 
   private String name;
-  private String type;
+  private TypeRef type;
   private boolean varargs;
   private int modifiers;
-  
+
 }

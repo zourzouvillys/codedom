@@ -30,7 +30,11 @@ import lombok.Singular;
 @Getter
 public class TypeDeclaration implements BodyDeclaration
 {
-  
+
+  /**
+   * JavaDoc which should be printed before the declaration.
+   */
+
   private final String javadoc;
 
   @Singular
@@ -43,7 +47,6 @@ public class TypeDeclaration implements BodyDeclaration
 
   @Singular
   private final Set<Modifier> modifiers;
-  
 
   /**
    * The name of this type.
@@ -58,7 +61,8 @@ public class TypeDeclaration implements BodyDeclaration
   private final boolean isInterface;
 
   /**
-   * represents something in the body of a class or interface (method, field, etc).
+   * represents something in the body of a class or interface (method, field,
+   * etc).
    */
 
   @Singular

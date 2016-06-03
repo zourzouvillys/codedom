@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import io.netlibs.codedom.java.codedom.AssignmentExpression;
 import io.netlibs.codedom.java.codedom.BodyDeclarationVisitor;
+import io.netlibs.codedom.java.codedom.CompilationUnit;
+import io.netlibs.codedom.java.codedom.ConstantValueExpression;
+import io.netlibs.codedom.java.codedom.ConstantValueVisitor;
 import io.netlibs.codedom.java.codedom.ExpressionStatement;
 import io.netlibs.codedom.java.codedom.ExpressionVisitor;
 import io.netlibs.codedom.java.codedom.FieldDeclaration;
@@ -17,18 +20,28 @@ import io.netlibs.codedom.java.codedom.ReturnStatement;
 import io.netlibs.codedom.java.codedom.SimpleNameExpression;
 import io.netlibs.codedom.java.codedom.SingleVariableDeclaration;
 import io.netlibs.codedom.java.codedom.StatementVisitor;
+import io.netlibs.codedom.java.codedom.StringValue;
 import io.netlibs.codedom.java.codedom.ThisExpression;
 import io.netlibs.codedom.java.codedom.TypeDeclaration;
 
-public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisitor<Void>, ExpressionVisitor<Void>
+public class JavaWriter
+    implements BodyDeclarationVisitor<Void>, StatementVisitor<Void>, ExpressionVisitor<Void>, ConstantValueVisitor<Void>
 {
 
   private PrintStream out;
   private int depth = 0;
+  private JavaIndender indenter;
 
   public JavaWriter(OutputStream out)
   {
     this.out = new PrintStream(out);
+    this.indenter = new DefaultJavaIndenter();
+  }
+
+  public JavaWriter(OutputStream out, JavaIndender indenter)
+  {
+    this.out = new PrintStream(out);
+    this.indenter = indenter;
   }
 
   private void indent()
@@ -38,8 +51,7 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
 
   private void indent(int extra)
   {
-    for (int i = 0; i < depth + extra; ++i)
-      out.print("  ");
+    indenter.indent(out, depth, extra);
   }
 
   public void write(TypeDeclaration decl)
@@ -139,8 +151,8 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
 
     out.print(method.getName());
     out.print("(");
-    
-    int i = 0;    
+
+    int i = 0;
     for (SingleVariableDeclaration param : method.getParameters())
     {
       if (i++ > 0)
@@ -216,7 +228,6 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
     return null;
   }
 
-
   @Override
   public Void visitExpressionStatement(ExpressionStatement stmt)
   {
@@ -225,7 +236,7 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
     out.println(";");
     return null;
   }
-  
+
   @Override
   public Void visitReturnStatement(ReturnStatement returnStatement)
   {
@@ -274,5 +285,52 @@ public class JavaWriter implements BodyDeclarationVisitor<Void>, StatementVisito
     return null;
   }
 
+  public void visitCompilationUnit(CompilationUnit unit)
+  {
+
+    if (unit.getPackageName() != null)
+    {
+      out.print("package ");
+      out.print(unit.getPackageName());
+      out.println(";");
+      out.println();
+    }
+
+    unit.getTypes().forEach(type -> type.apply(this));
+
+  }
+
+  @Override
+  public Void visitConstantValueExpression(ConstantValueExpression value)
+  {
+    return value.getValue().apply(this);
+  }
+
+  @Override
+  public <R> R visitStringValue(StringValue value)
+  {
+
+    out.print('"');
+
+    for (int i = 0; i < value.getValue().length(); ++i)
+    {
+      char ch = value.getValue().charAt(i);
+
+      switch (ch)
+      {
+        case '"':
+        case '\\':
+          out.print('\\');
+          break;
+      }
+
+      out.print(ch);
+    }
+
+    out.print('"');
+
+    return null;
+
+  }
 
 }

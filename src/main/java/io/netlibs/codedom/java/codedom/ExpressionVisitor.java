@@ -11,4 +11,6 @@ public interface ExpressionVisitor<R>
 
   R visitSimpleNameExpression(SimpleNameExpression expr);
 
+  R visitConstantValueExpression(ConstantValueExpression expr);
+
 }

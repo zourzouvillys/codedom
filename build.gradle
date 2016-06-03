@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.18'
+    // compile 'org.slf4j:slf4j-api:1.7.18'
+    compile 'org.projectlombok:lombok:1.16.6'
     testCompile 'junit:junit:4.12'
 }

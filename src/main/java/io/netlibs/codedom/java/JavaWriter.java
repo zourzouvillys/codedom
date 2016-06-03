@@ -16,6 +16,7 @@ import io.netlibs.codedom.java.codedom.FieldDeclaration;
 import io.netlibs.codedom.java.codedom.FieldExpression;
 import io.netlibs.codedom.java.codedom.MethodDeclaration;
 import io.netlibs.codedom.java.codedom.Modifier;
+import io.netlibs.codedom.java.codedom.RawTypeRef;
 import io.netlibs.codedom.java.codedom.ReturnStatement;
 import io.netlibs.codedom.java.codedom.SimpleClassTypeRef;
 import io.netlibs.codedom.java.codedom.SimpleNameExpression;
@@ -355,6 +356,13 @@ public class JavaWriter
 
     return null;
 
+  }
+
+  @Override
+  public Void visitRawTypeRef(RawTypeRef raw)
+  {
+    out.print(raw.getRaw());
+    return null;
   }
 
 }

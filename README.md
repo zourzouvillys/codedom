@@ -6,3 +6,7 @@ This allows cross-cutting concerns such as indentation, escaping, etc to be hand
 
 netlibs codedom provides such an implementation.  Currently it's just for Java, however other languages will be added as needed (or pull requests).
 
+## History
+
+This code was initially part of a Java GraphQL implementation, but when the (author)[https://github.com/zourzouvillys] needed similar functionallity for the XANGKit project, it was moved into the netlibs repo.
+
